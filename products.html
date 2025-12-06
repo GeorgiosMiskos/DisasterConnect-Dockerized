@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Products</title>
+    <script src="auth.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.2/dist/bootstrap-table.min.css">
+    <script src="https://unpkg.com/bootstrap-table@1.22.2/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.28.0/tableExport.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+
+    
+</head>
+
+<body>
+
+    <div id="nav-placeholder" class="mb-5 pb-4"></div>
+
+    <section class="bg-danger text-dark p-4 text-sm-start">
+        <h2 class="text-center">Products</h2>
+    </section>
+
+   
+    <div class="filler">
+        <div class="container pt-5">
+            <div class="card">
+                <div class="card-body bg-light">
+                    <h3 class="text-center">Products in Base</h3>
+                    <div id="toolbar">
+                        <button id="announce" class="btn btn-primary" disabled>
+                            <i class="fa fa-bullhorn"></i> Create Announcement
+                        </button>
+                        <button id="remove" class="btn btn-danger" disabled>
+                            <i class="fa fa-trash"></i> Delete 
+                        </button>
+                        <button type="button" class="btn btn-success" id="addProductBtn">
+                            <i class="fa fa-plus"></i> Add Product
+                        </button>
+                    </div>
+                    <table id="table" data-toolbar="#toolbar" data-search="true" data-detail-view="true" 
+                        data-click-to-select="true" data-detail-formatter="detailFormatter" data-pagination="true"
+                        data-id-field="id" data-page-list="[10, 25, 50, 100, all]"
+                        data-url="./php/getProductsCategories.php" data-response-handler="responseHandler">
+                    </table> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filler">
+        <div class="container pt-5">
+            <div class="card mb-5">
+                <div class="card-body bg-light">
+                    <h3 class="text-center">Products in Vehicles</h3>
+                    <table id="vehicle-products-table" data-toolbar="#vehicle-toolbar" data-search="true"
+                        data-detail-view="true" data-click-to-select="true" data-detail-formatter="detailFormatter"
+                        data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, all]"
+                        data-url="./php/getVehicleProducts.php" data-response-handler="vehicleResponseHandler">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addProductModal" class="modal fade" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductForm">
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="productName" name="productName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" id="categoryName" name="categoryName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="details" class="form-label">Details</label>
+                            <div id="detailsContainer">
+                                <div class="row g-3 detailRow">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="detail_name[]" placeholder="Detail Name" required>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="detail_value[]" placeholder="Detail Value" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger removeDetail"><i class="fa fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary mt-2" id="addDetailBtn"><i class="fa fa-plus"></i> Add Detail</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary"id="submitProductBtn">Add Product</button>
+                        </div>
+                    </form>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="./js/productTable.js"></script>
+</body>
+
+</html>

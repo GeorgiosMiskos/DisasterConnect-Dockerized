@@ -1,0 +1,72 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: block;
+    position: absolute;
+    height: auto;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.filler{
+    min-height: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%; 
+    z-index: 1; 
+    border-radius: 10px;
+
+}
+
+
+
+.filter-panel {
+    position: absolute;
+    top: 100px;
+    left: 10px;
+    z-index: 100;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.legend {
+    position: absolute;
+    top: 150px;
+    left: 10px;
+    z-index: 1;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-panel2 {
+    position: absolute;
+    top: 450px;
+    left: 10px;
+    z-index: 100;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.legend2 {
+    position: absolute;
+    top: 550px;
+    left: 10px;
+    z-index: 1;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

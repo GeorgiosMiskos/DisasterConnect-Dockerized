@@ -1,0 +1,27 @@
+{
+    "code": 1,
+    "message": "Retrieved successfully",
+    "items": [
+        {
+            "id": "196",
+            "name": "Fanta",
+            "category": "6",
+            "details": [
+                {
+                    "detail_name": "volume",
+                    "detail_value": "1.5l"
+                },
+                {
+                    "detail_name": "pack size",
+                    "detail_value": "2"
+                }
+            ]
+        }
+    ],
+    "categories": [
+        {
+            "id": "6",
+            "category_name": "Beverages"
+        }
+    ]
+}
