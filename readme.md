@@ -13,7 +13,7 @@
 
 ---
 
-## 🧱 Αρχιτεκτονική (Version 1.0 – Manual Docker)
+## (Version 1.0 – Manual Docker)
 
 ```text
 Σε αυτή την έκδοση, η εφαρμογή τρέχει με χειροκίνητα Docker containers και ένα custom Docker network: disaster-net.
@@ -49,8 +49,9 @@ docker run --name disaster-frontend ^
   -p 8080:80 ^
   -d disaster-frontend:1.2
 
------------------------------------------------------------------------------------------------------------
-🧩 Version 1.2 – Orchestration με Docker Compose
+---
+```md
+##  (Version 1.2 – Docker Compose)
 
 Στην έκδοση 1.2, το ίδιο 3-tier σύστημα ορχηστρώνεται μέσω Docker Compose, ώστε όλα τα services να σηκώνονται με μία εντολή.
 🔹 docker-compose.yml 
