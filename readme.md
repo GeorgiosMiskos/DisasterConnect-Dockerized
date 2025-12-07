@@ -1,4 +1,4 @@
-## (Version 1.0 – Manual Docker)
+## (Version 1.1 – Manual Docker)
 
 ```text
 Σε αυτή την έκδοση, η εφαρμογή τρέχει με χειροκίνητα Docker containers και ένα custom Docker network: disaster-net.
