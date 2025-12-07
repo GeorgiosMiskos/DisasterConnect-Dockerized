@@ -75,3 +75,43 @@ docker compose down
 Σταματάει και σβήνει τα containers.
 Το volume db_data παραμένει (κρατάει τη βάση δεδομένων)
 ```
+
+---
+
+## (Version 2.0 – Kubernetes / Minikube)
+
+```text
+Σε αυτή την έκδοση, το project μεταβαίνει από το Docker Compose σε περιβάλλον Orchestration με Kubernetes (Minikube).
+Η εφαρμογή δεν τρέχει πλέον ως απλά containers, αλλά ως Pods διαχειριζόμενα από Deployments και Services, προσομοιώνοντας ένα production περιβάλλον.
+
+Βασικές Αλλαγές:
+- Χρήση Kubernetes Manifests (.yaml) αντί για docker-compose.
+- Data Injection στη MySQL μέσω ConfigMap (το αρχείο web24.sql ανεβαίνει στο Cluster).
+- Self-healing: Το Kubernetes επανεκκινεί αυτόματα τα Pods αν κρασάρουν.
+- Namespace isolation: Όλα τρέχουν στο namespace 'disasterconnect'.
+
+🔹 1. Προετοιμασία Cluster & Namespace
+minikube start
+kubectl apply -f k8s/00-namespace.yaml
+
+🔹 2. Φόρτωση Βάσης (ConfigMap)
+Επειδή το Minikube δεν βλέπει τους τοπικούς φακέλους όπως το Docker Compose, ανεβάζουμε το SQL script ως ConfigMap:
+
+kubectl create configmap mysql-initdb-config --from-file=web24.sql -n disasterconnect
+
+🔹 3. Εκκίνηση Services (Deployments)
+Σηκώνουμε τα Deployments για MySQL, Backend και Frontend:
+
+kubectl apply -f k8s/mysql.yaml
+kubectl apply -f k8s/backend.yaml
+kubectl apply -f k8s/frontend.yaml
+
+🔹 4. Πρόσβαση στην εφαρμογή
+Επειδή τρέχουμε σε Cluster, ζητάμε από το Minikube να μας δώσει το URL για το Frontend service:
+
+minikube service disaster-frontend -n disasterconnect
+
+🔹 5. Έλεγχος κατάστασης
+Για να δούμε αν όλα τα Pods τρέχουν (Running 1/1):
+
+kubectl get pods -n disasterconnect -w
