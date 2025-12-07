@@ -1,3 +1,14 @@
+## DisasterConnect – 3-Tier Containerized Web Application (Trying to dockerize project for portfolio)
+Το **DisasterConnect** είναι μια 3-tier web εφαρμογή για διαχείριση πόρων, αιτημάτων και λογαριασμών σε περιβάλλον καταστροφών. 
+Η εφαρμογή αποτελείται από:
+ - **Frontend**: Static HTML/CSS/JS σε Nginx
+ - **Backend**: PHP 8.2 + Apache 
+ - **Database**: MySQL 8.0 
+ - **Reverse Proxy**: Nginx που δρομολογεί αιτήματα προς το backend. 
+Αυτή τη στιγμή το project τρέχει σε **3 Docker containers**, συνδεδεμένα μέσω ενός custom Docker network.
+
+ ---
+
 ## (Version 1.1 – Manual Docker)
 
 ```text
