@@ -1,0 +1,42 @@
+apiVersion: apps/v1 #api version gia deployment.
+kind: Deployment #paw na xtisw deployment 
+metadata:
+  name: disaster-backend #to onoma tou deployment
+  namespace: disasterconnect #edw einai to namespace tou, peripou san fakelos pou mpainoun mesa ola ta resources tou project mou
+  labels:
+    app: disaster-backend #den xreiazetai aparaithta label sto deployment, to vazw gia na einai pio katharo pros emena
+spec:
+  replicas: 1 #thelw na trexei panta 1 pod
+  selector:
+    matchLabels:
+      app: disaster-backend #Osa pods exoun label disaster-backend, einai dika mou, egw ta xeirizomai( to deployment)
+  template:
+    metadata:
+      labels:
+        app: disaster-backend #template label, dhladh an pethanei ena kai dimiourgisei to deployment allo, tha tou dwsei label disaster-backend
+    spec: #specifications gia ti tha periexei to pod.
+      containers:
+        - name: backend #to onoma tou container
+          image: gmisk/disaster-backend:1.2 #to image apo to opoio trexei to container ( to ekana upload sto dockerhub mou)
+          ports:
+            - containerPort: 80 #akouei default sto 80 logw apache
+          env: #epeidh ta php arxeia mou theloun prosvash sthn vash mou, prepi na dwsw tis metavlhtes.(kanonika credentials = secret)
+            - name: MYSQL_HOST 
+              value: "disaster-mysql"
+            - name: MYSQL_DATABASE
+              value: "web24"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "Omgkai3lol!"
+
+---
+apiVersion: v1 
+kind: Service #edw dimiourgw ena service, ousiastika gia na mporw na epikoinwnw me ta pods tou backend
+metadata:
+  name: disaster-backend #to onoma tou service
+  namespace: disasterconnect #na anoiksei sto namespae tou disasterconnect
+spec:
+  selector:
+    app: disaster-backend #osa pods exoun label disaster-backend --> ta xeirizetai auto to service
+  ports:
+    - port: 80 #to port pou to kanw egw expose
+      targetPort: 80 #to default port tou apache

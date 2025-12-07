@@ -1,0 +1,48 @@
+apiVersion: apps/v1 #version tou k8s
+kind: Deployment #frontise na trexei sunexeia ena pod me mysql
+metadata:
+  name: disaster-mysql #to onoma tou deployment
+  namespace: disasterconnect
+  labels:
+    app: disaster-mysql
+spec:
+  replicas: 1 #1 mysql pod
+  selector:
+    matchLabels:
+      app: disaster-mysql #to deployment tha afora pods me app=disaster-mysql
+  template:
+    metadata:
+      labels:
+        app: disaster-mysql #ta pods pou tha ftiaxnw tha exoun app = disaster-mysql
+    spec:
+      containers: #orizw to container tou pod
+        - name: mysql #onoma container
+          image: mysql:8.0 #apo pou na traviksei image gia na to xtisei
+          ports:
+            - containerPort: 3306 #to container akouei se auto to port
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "Omgkai3lol!"
+            - name: MYSQL_DATABASE
+              value: "web24"
+          volumeMounts: 
+            - name: mysql-initdb
+              mountPath: /docker-entrypoint-initdb.d
+      volumes: 
+        - name: mysql-initdb
+          configMap:
+            name: mysql-initdb-config
+---
+apiVersion: v1
+kind: Service #einai typou service gia na exw statheri ip kai name gia na vrw ta sql pods
+metadata:
+  name: disaster-mysql #auto tha xrisimopoiei to backend gia na parei ta sql pods
+  namespace: disasterconnect
+  labels:
+    app: disaster-mysql
+spec:
+  selector:
+    app: disaster-mysql #to service stoxeuei pods me app = disaster-mysql
+  ports:
+    - port: 3306 #h porta tou service
+      targetPort: 3306 #h porta tou container( einai h default mysql port)
