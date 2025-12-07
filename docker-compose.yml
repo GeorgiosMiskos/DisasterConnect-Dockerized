@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  disaster-mysql:
+    image: mysql:8.0
+    container_name: disaster-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Omgkai3lol!
+      MYSQL_DATABASE: web24
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - disaster-net
+
+  disaster-backend-test:
+    build:
+      context: .
+      dockerfile: dockerfile.backend
+    container_name: disaster-backend-test
+    depends_on:
+      - disaster-mysql
+    ports:
+      - "8081:80"
+    networks:
+      - disaster-net
+
+  disaster-frontend:
+    build:
+      context: .
+      dockerfile: dockerfile.frontend
+    container_name: disaster-frontend
+    depends_on:
+      - disaster-backend-test
+    ports:
+      - "8080:80"
+    networks:
+      - disaster-net
+
+networks:
+  disaster-net:
+
+volumes:
+  db_data:

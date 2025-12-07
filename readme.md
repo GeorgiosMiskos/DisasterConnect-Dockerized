@@ -49,3 +49,34 @@ docker run --name disaster-frontend ^
   -p 8080:80 ^
   -d disaster-frontend:1.2
 
+-----------------------------------------------------------------------------------------------------------
+🧩 Version 1.2 – Orchestration με Docker Compose
+
+Στην έκδοση 1.2, το ίδιο 3-tier σύστημα ορχηστρώνεται μέσω Docker Compose, ώστε όλα τα services να σηκώνονται με μία εντολή.
+🔹 docker-compose.yml 
+
+Το project περιλαμβάνει αρχείο docker-compose.yml με 3 services:
+    disaster-mysql – MySQL 8.0 με persistent volume
+    disaster-backend-test – PHP/Apache backend (build από dockerfile.backend)
+    disaster-frontend – Nginx frontend (build από dockerfile.frontend)
+
+🔹 Εκκίνηση με Compose
+docker compose up -d
+
+Άρα σε αυτό το version, με 1 μόνο εντολή:
+1) Χτίζει τα images για backend & frontend
+2)Κατεβάζει το mysql:8.0 image
+3)Δημιουργεί a)το Docker network disaster-net 
+             b)το volume db_data
+
+4)Σηκώνει ΟΛΑ τα containers στο background
+
+🔹 Σβήσιμο/σταμάτημα με Compose
+docker compose down
+Σταματάει και σβήνει τα containers.
+Το volume db_data παραμένει (κρατάει τη βάση δεδομένων)
+
+🚀 Version Roadmap (Junior DevOps Journey)
+Versions used until now:
+1.0	Πλήρως Dockerized 3-tier app με manual docker run & custom network
+1.2	Orchestration με Docker Compose (docker-compose.yml, networks, volumes, depends_on)
