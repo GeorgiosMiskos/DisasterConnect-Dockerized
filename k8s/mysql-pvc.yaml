@@ -1,0 +1,11 @@
+apiVersion: v1 
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  namespace: disasterconnect
+spec:
+  accessModes:
+    - ReadWriteOnce # 1 pod tin fora na grafei/diabazei
+  resources:
+    requests:
+      storage: 1Gi # dwse 1gb mesa sto k8s gia na mporw na apothikevw kathe fora ekei tin vash

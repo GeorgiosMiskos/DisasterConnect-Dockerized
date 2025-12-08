@@ -138,3 +138,27 @@ kubectl get pods -n disasterconnect -w
    - Χτίζει το νέο Frontend Image -> Push στο gmisk/disaster-frontend
 
 📂 Αρχείο Ρύθμισης: .github/workflows/docker-publish.yml
+```
+---
+
+## (Version 2.2 – Data Persistence with PVC)
+
+```text
+Σε αυτή την έκδοση, λύθηκε το πρόβλημα της απώλειας δεδομένων (Data Loss) κατά την επανεκκίνηση των Pods.
+Η εφαρμογή πλέον είναι Stateful.
+
+🔹 Το Πρόβλημα (πριν το v2.2):
+Τα δεδομένα της MySQL αποθηκεύονταν μέσα στο Container. Αν το Pod διεγραφόταν (π.χ. crash ή update), η βάση γύριζε στην αρχική της κατάσταση και οι χρήστες χάνονταν.
+
+🔹 Η Λύση (PersistentVolumeClaim):
+Δημιουργήσαμε ένα PVC (Persistent Volume Claim) 1GB.
+Πλέον, η MySQL δεν γράφει στον προσωρινό φάκελο του container, αλλά σε έναν "μόνιμο δίσκο" που διαχειρίζεται το Kubernetes.
+
+🔹 Verification Test:
+1. Εγγραφή χρήστη (Signup).
+2. Διαγραφή του MySQL Pod (Simulated Crash).
+3. Αυτόματη δημιουργία νέου Pod από το Kubernetes.
+4. Ο χρήστης υπάρχει κανονικά στη βάση.
+
+📂 Νέα Αρχεία: k8s/mysql-pvc.yaml
+🔄 Updated: k8s/mysql.yaml (Added volumeMounts)
