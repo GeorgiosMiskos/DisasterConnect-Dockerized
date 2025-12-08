@@ -115,6 +115,7 @@ minikube service disaster-frontend -n disasterconnect
 Για να δούμε αν όλα τα Pods τρέχουν (Running 1/1):
 
 kubectl get pods -n disasterconnect -w
+```
 
 ---
 
