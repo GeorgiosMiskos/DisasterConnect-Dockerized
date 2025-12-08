@@ -44,7 +44,7 @@ docker run --name disaster-frontend --network disaster-net -p 8080:80 -d disaste
 ---
 
 ## (Version 1.2 – Docker Compose)
-
+```text
 🔹 docker-compose.yml:
 Περιλαμβάνει τα 3 services.
 Notes: i)Ο κωδικός ήταν γραμμένος μέσα στο αρχείο yml.
@@ -62,7 +62,7 @@ docker compose down
 2. Μπείτε στο site και κάντε εγγραφή.
 3. Τρέξτε 'docker compose down' και μετά ξανά 'up'.
 4. Ο χρήστης έχει χαθεί (Expected behavior for stateless).
-
+```
 ---
 
 ## (Version 2.0 – Kubernetes / Minikube)
