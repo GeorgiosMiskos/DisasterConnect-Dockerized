@@ -9,7 +9,7 @@
 
 Αυτή τη στιγμή το project τρέχει σε **Kubernetes Cluster**, έχοντας περάσει από τα στάδια Docker και Docker Compose.
 To project αυτό έχει δημιουργηθεί καθαρά για ακαδημαικούς σκοπούς.
-
+Για κάθε Version, υπάρχει και το αντίστοιχο tag στο repository με τα files του.
 ---
 
 ## (Version 1.1 – Manual Docker)
