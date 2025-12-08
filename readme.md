@@ -115,3 +115,21 @@ minikube service disaster-frontend -n disasterconnect
 Για να δούμε αν όλα τα Pods τρέχουν (Running 1/1):
 
 kubectl get pods -n disasterconnect -w
+
+---
+
+## (Version 2.1 – CI/CD Automation)
+
+```text
+Σε αυτή την έκδοση, προστέθηκε αυτοματισμός (CI/CD) χρησιμοποιώντας GitHub Actions.
+Πλέον, δεν χρειάζεται χειροκίνητο build των Docker images.
+
+🔹 Πώς λειτουργεί το Pipeline:
+1. Κάθε φορά που γίνεται Push κώδικα στο 'master' branch.
+2. Το GitHub δεσμεύει έναν Ubuntu server.
+3. Κατεβάζει τον κώδικα (Checkout).
+4. Συνδέεται στο DockerHub (Login) χρησιμοποιώντας κρυπτογραφημένα Secrets.
+5. Χτίζει τα Docker Images για Frontend & Backend.
+6. Τα ανεβάζει αυτόματα (Push) στο DockerHub repositories.
+
+🔹 Αρχείο Ρύθμισης: .github/workflows/docker-publish.yml
