@@ -1,6 +1,11 @@
 #docker image me apache server-php-linux
 FROM php:8.2-apache 
 #trexw php extentions -- mysqli gia na milaw me sql
+
+#test gia na dw ta automate builds tou cicd
+RUN echo "Building Version 2.1 inside GitHub Actions!" 
+
+
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 #oles oi entoles apo dw kai katw, doulevoun se auto to path
 WORKDIR /var/www/html
