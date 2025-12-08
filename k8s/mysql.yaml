@@ -28,10 +28,19 @@ spec:
           volumeMounts: 
             - name: mysql-initdb
               mountPath: /docker-entrypoint-initdb.d
+            #edw tha einai o monimos xwros gia ta dedomena.
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
       volumes: 
         - name: mysql-initdb
           configMap:
-            name: mysql-initdb-config
+            name: mysql-initdb-config #auto einai to web24.sql
+        
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+
+
 ---
 apiVersion: v1
 kind: Service #einai typou service gia na exw statheri ip kai name gia na vrw ta sql pods
