@@ -21,12 +21,17 @@ spec:
           ports:
             - containerPort: 80 #akouei default sto 80 logw apache
           env: #epeidh ta php arxeia mou theloun prosvash sthn vash mou, prepi na dwsw tis metavlhtes.(kanonika credentials = secret)
-            - name: MYSQL_HOST 
+            - name: DB_HOST
               value: "disaster-mysql"
-            - name: MYSQL_DATABASE
+              name: DB_USER 
+              value: "root"
+            - name: DB_NAME
               value: "web24"
-            - name: MYSQL_ROOT_PASSWORD
-              value: "Omgkai3lol!"
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
 
 ---
 apiVersion: v1 

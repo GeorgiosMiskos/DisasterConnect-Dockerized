@@ -162,3 +162,29 @@ kubectl get pods -n disasterconnect -w
 
 📂 Νέα Αρχεία: k8s/mysql-pvc.yaml
 🔄 Updated: k8s/mysql.yaml (Added volumeMounts)
+```
+
+---
+
+## (Version 2.3 – Security & Environment Variables)
+
+```text
+Σε αυτή την έκδοση, θωρακίσαμε την ασφάλεια της εφαρμογής αφαιρώντας όλους τους visible κωδικούς τόσο από τα αρχεία (YAML) όσο και από τον κώδικα τα αρχεία (PHP).
+
+🔹 Το Πρόβλημα:
+Οι κωδικοί της βάσης ήταν εκτεθειμένοι σε plain text μέσα στα Kubernetes manifests και στα αρχεία PHP ($password = "my visible password!").
+
+🔹 Η Λύση (Kubernetes Secrets + Injection):
+1. Δημιουργία Secret: Αποθηκεύσαμε τον κωδικό κρυπτογραφημένο στο Cluster (mysql-secret).
+2. MySQL Deployment: Ρυθμίσαμε τη βάση να διαβάζει το root password δυναμικά από το Secret.
+3. Backend Deployment: Ρυθμίσαμε το Backend να λαμβάνει το Secret ως Environment Variable (DB_PASS).
+4. PHP Code Refactor: Αλλάξαμε τον κώδικα σύνδεσης ώστε να χρησιμοποιεί τη μέθοδο `getenv('DB_PASS')` αντί για στατικό string.
+
+🔹 Εντολή Δημιουργίας Secret:
+kubectl create secret generic mysql-secret --from-literal=password='<HIDDEN>' -n disasterconnect
+
+🔹 Security Flow:
+K8s Secret (Encrypted) -> Inject to Pod as Env Var -> PHP Runtime reads Env Var -> DB Connection
+
+🔄 Updated: k8s/mysql.yaml, k8s/backend.yaml
+🔄 Updated: PHP Source Code (dbConnect.php)

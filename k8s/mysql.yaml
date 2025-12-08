@@ -22,7 +22,10 @@ spec:
             - containerPort: 3306 #to container akouei se auto to port
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "Omgkai3lol!"
+              valueFrom:              
+                secretKeyRef:
+                  name: mysql-secret  #ekei mesa exw to secret password ( apo kubectl create secret)
+                  key: password
             - name: MYSQL_DATABASE
               value: "web24"
           volumeMounts: 
