@@ -118,18 +118,22 @@ kubectl get pods -n disasterconnect -w
 
 ---
 
-## (Version 2.1 – CI/CD Automation)
+## (Version 2.1 – CI/CD Automation with GitHub Actions)
 
 ```text
-Σε αυτή την έκδοση, προστέθηκε αυτοματισμός (CI/CD) χρησιμοποιώντας GitHub Actions.
+Σε αυτή την έκδοση, προστέθηκε πλήρης αυτοματισμός (CI/CD Pipeline) με GitHub Actions.
 Πλέον, δεν χρειάζεται χειροκίνητο build των Docker images.
 
-🔹 Πώς λειτουργεί το Pipeline:
-1. Κάθε φορά που γίνεται Push κώδικα στο 'master' branch.
-2. Το GitHub δεσμεύει έναν Ubuntu server.
-3. Κατεβάζει τον κώδικα (Checkout).
-4. Συνδέεται στο DockerHub (Login) χρησιμοποιώντας κρυπτογραφημένα Secrets.
-5. Χτίζει τα Docker Images για Frontend & Backend.
-6. Τα ανεβάζει αυτόματα (Push) στο DockerHub repositories.
+🔹 Τι πετύχαμε:
+Κάθε φορά που γίνεται αλλαγή στον κώδικα (Push), το GitHub αναλαμβάνει δράση.
+Δεν χρειάζεται να τρέχουμε 'docker build' ή 'docker push' τοπικά.
 
-🔹 Αρχείο Ρύθμισης: .github/workflows/docker-publish.yml
+🔹 Η Ροή του Pipeline (Workflow):
+1. Trigger: Ενεργοποιείται αυτόματα με κάθε Push στο 'master' branch.
+2. Environment: Το GitHub δεσμεύει έναν καθαρό Ubuntu Server (Runner).
+3. Security: Συνδέεται στο DockerHub με Encrypted Secrets (DOCKERHUB_TOKEN).
+4. Build & Push:
+   - Χτίζει το νέο Backend Image -> Push στο gmisk/disaster-backend
+   - Χτίζει το νέο Frontend Image -> Push στο gmisk/disaster-frontend
+
+📂 Αρχείο Ρύθμισης: .github/workflows/docker-publish.yml
