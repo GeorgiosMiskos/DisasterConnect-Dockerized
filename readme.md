@@ -46,8 +46,8 @@ docker run --name disaster-frontend --network disaster-net -p 8080:80 -d disaste
 ```text
 🔹 docker-compose.yml:
 Περιλαμβάνει τα 3 services.
-Notes: i)Ο κωδικός ήταν γραμμένος μέσα στο αρχείο yml.
-       ii)Stateless (Στο 'docker compose down' τα δεδομένα χάνονται).
+Notes: 1)Ο κωδικός ήταν γραμμένος μέσα στο αρχείο yml.
+       2)Stateless (Στο 'docker compose down' τα δεδομένα χάνονται).
 
 🚀 How to Run (Commands):
 # Εκκίνηση όλων
